@@ -19,6 +19,7 @@ public class Role {
     @Id
     @Column(name = "role_id")
     private UUID id=UUID.randomUUID();
+
     @Column(unique = true, nullable = false)
     private String role;
 
