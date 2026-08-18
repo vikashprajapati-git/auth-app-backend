@@ -1,4 +1,4 @@
-package com.auth.services;
+package com.auth.services.impl;
 
 import com.auth.dtos.UserRequestDto;
 import com.auth.dtos.UserResponseDto;
@@ -7,11 +7,13 @@ import com.auth.entities.User;
 import com.auth.exceptions.ResourceNotFoundException;
 import com.auth.helpers.UserHelper;
 import com.auth.repositories.UserRepositry;
+import com.auth.services.UserService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.UUID;
 
 @Service
@@ -63,6 +65,7 @@ public class UserServiceImpl implements UserService {
         if(userResponseDto.getImage() != null || !userResponseDto.getImage().isEmpty())
             existingUser.setImage(userResponseDto.getImage());
         existingUser.setEnabled(userResponseDto.isEnabled());
+        existingUser.setUpdatedAt(Instant.now());
 
         userRepositry.save(existingUser);
         return modelMapper.map(existingUser, UserResponseDto.class);
