@@ -100,12 +100,12 @@ public class JwtService {
 
     public boolean isAccessToken(String token){
         Claims c = parse(token).getPayload();
-        return "access".equals(c.get("typ"));
+        return "access".equals(c.get("typ", String.class));
     }
 
     public boolean isRefreshToken(String token){
         Claims c = parse(token).getPayload();
-        return "refresh".equals(c.get("typ"));
+        return "refresh".equals(c.get("typ", String.class));
     }
 
     public UUID getUserId(String token){
@@ -116,5 +116,12 @@ public class JwtService {
     public String getJti(String token){
         return parse(token).getPayload().getId();
     }
+
+    public List<String> getRoles(String token){
+        Claims c = parse(token).getPayload();
+        return (List<String>) c.get("roles");
+    }
+
+
 
 }
